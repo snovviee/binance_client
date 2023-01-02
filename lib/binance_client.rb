@@ -30,6 +30,8 @@ module FaradayMiddleware
 end
 
 class BinanceClient
+  class MarketParamsValidationError < StandardError; end
+
   Faraday::NestedParamsEncoder.sort_params = false
   Faraday::Request.register_middleware binance_signature: -> { FaradayMiddleware::BinanceSignature }
 
@@ -38,14 +40,25 @@ class BinanceClient
   def initialize(api_key:, secret_key:)
     @api_key = api_key
     @secret_key = secret_key
+    BinanceClient.children << self
+  end
+
+  def self.children
+    @@children ||= Set.new
   end
 
   def orders(symbol:)
     connection.get('/fapi/v1/allOrders', { symbol: symbol, timestamp: timestamp })
   end
 
-  def place_order(symbol:, side:, type:, time_in_force:, quantity:, price:)
-    connection.post('/fapi/v1/order', { symbol: symbol, side: side, type: type, timeInForce: time_in_force, quantity: quantity, price: price, timestamp: timestamp })
+  def place_order(params)
+    connection.post('/fapi/v1/order', params.merge(timestamp: timestamp))
+  end
+
+  def place_market_order(symbol:, side:, type:, quantity:, time_in_force: nil, price: nil)
+    raise MarketParamsValidationError if type == 'MARKET' && (time_in_force || price)
+
+    place_order(symbol: symbol, side: side, type: type, quantity: quantity)
   end
 
   private
