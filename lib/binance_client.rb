@@ -15,7 +15,7 @@ module FaradayMiddleware
       if env.url.query
         signature = signature(env.url.query)
         env.url.query += "&signature=#{signature}"
-      else
+      elsif env.request_body
         signature = signature(env.request_body)
         env.request_body += "&signature=#{signature}"
       end
@@ -59,6 +59,22 @@ class BinanceClient
     raise MarketParamsValidationError if type == 'MARKET' && (time_in_force || price)
 
     place_order(symbol: symbol, side: side, type: type, quantity: quantity)
+  end
+
+  def balance
+    connection.get('/fapi/v2/balance', { timestamp: timestamp })
+  end
+
+  def update_leverage(symbol:, leverage:)
+    connection.post('/fapi/v1/leverage', { symbol: symbol, leverage: leverage, timestamp: timestamp })
+  end
+
+  def start_data_stream
+    connection.post('/fapi/v1/listenKey')
+  end
+
+  def keepalive_data_stream
+    connection.put('/fapi/v1/listenKey')
   end
 
   private
