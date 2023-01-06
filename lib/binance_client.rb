@@ -61,7 +61,7 @@ class BinanceClient
     place_order(symbol: symbol, side: side, type: type, quantity: quantity)
   end
 
-  def balance
+  def fetch_balance
     connection.get('/fapi/v2/balance', { timestamp: timestamp })
   end
 
