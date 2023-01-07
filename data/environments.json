@@ -1,0 +1,6 @@
+{
+  "testnet": {
+    "http_url": "https://testnet.binancefuture.com",
+    "ws_url": "wss://stream.binancefuture.com/stream"
+  }
+}
