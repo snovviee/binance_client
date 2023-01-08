@@ -71,6 +71,10 @@ module BinanceClient
       connection.put('/fapi/v1/listenKey')
     end
 
+    def fetch_exchange_info
+      connection.get('/fapi/v1/exchangeInfo')
+    end
+
     private
 
     def connection
