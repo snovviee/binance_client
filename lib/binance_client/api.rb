@@ -75,6 +75,10 @@ module BinanceClient
       connection.get('/fapi/v1/exchangeInfo')
     end
 
+    def update_margin_type(symbol:, margin_type:) # margin_type "ISOLATED | CROSSED"
+      connection.post('/fapi/v1/marginType', { symbol: symbol, marginType: margin_type, timestamp: timestamp })
+    end
+
     private
 
     def connection
