@@ -3,19 +3,27 @@ require 'json'
 
 module BinanceClient
    class Environment
-     class EnvNotAllowed < StandardError; end
      class MultipleAssignmentNotAllowed < StandardError; end
-     class EnvIsMissing < StandardError; end
+     class EnvIsMissing < StandardError
+       def message
+         'BINANCE_ENV environment variable is not provided'
+       end
+     end
+     class EnvNotAllowed < StandardError
+       def message
+         "Provided environment is not allowed. Allowed environments are #{ALLOWED_ENVS}"
+       end
+     end
 
-     ALLOWED_ENVS = [:testnet].freeze
+     ALLOWED_ENVS = [:testnet, :production].freeze
 
      class << self
        attr_reader :config, :env
 
-       def setup!(env)
-         @env = env&.downcase&.to_sym
-
+       def setup!
          raise MultipleAssignmentNotAllowed if @config
+
+         @env = ENV['BINANCE_ENV']&.downcase&.to_sym
          raise EnvIsMissing unless self.env
          raise EnvNotAllowed unless ALLOWED_ENVS.include? self.env
 

@@ -2,5 +2,9 @@
   "testnet": {
     "http_url": "https://testnet.binancefuture.com",
     "ws_url": "wss://stream.binancefuture.com/stream"
+  },
+  "production": {
+    "http_url": "https://fapi.binance.com",
+    "ws_url": "wss://fstream.binance.com"
   }
 }
