@@ -55,6 +55,10 @@ module BinanceClient
       place_order(symbol: symbol, side: side, type: 'MARKET', quantity: quantity)
     end
 
+    def place_limit_order(symbol:, side:, quantity:, price:)
+      place_order(symbol: symbol, side: side, type: 'LIMIT', quantity: quantity, timeInForce: 'GTC', price: price)
+    end
+
     def fetch_balance
       connection.get('/fapi/v2/balance', { timestamp: timestamp })
     end
