@@ -83,6 +83,10 @@ module BinanceClient
       connection.post('/fapi/v1/marginType', { symbol: symbol, marginType: margin_type, timestamp: timestamp })
     end
 
+    def position_risk(symbol:)
+      connection.get('/fapi/v2/positionRisk', { symbol: symbol })
+    end
+
     private
 
     def connection
@@ -92,6 +96,7 @@ module BinanceClient
       ) do |f|
         f.request :url_encoded
         f.request :binance_signature, secret_key
+        f.response :logger, ::Logger.new(STDOUT), bodies: true, headers: false
         f.response :json, parser_options: { symbolize_names: true }
       end
     end
