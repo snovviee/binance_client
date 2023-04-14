@@ -52,11 +52,11 @@ module BinanceClient
     end
 
     def place_market_order(symbol:, side:, quantity:)
-      place_order(symbol: symbol, side: side, type: 'MARKET', quantity: quantity)
+      place_order(symbol: symbol, side: side.to_s.upcase, type: 'MARKET', quantity: quantity)
     end
 
     def place_limit_order(symbol:, side:, quantity:, price:)
-      place_order(symbol: symbol, side: side, type: 'LIMIT', quantity: quantity, timeInForce: 'GTC', price: price)
+      place_order(symbol: symbol, side: side.to_s.upcase, type: 'LIMIT', quantity: quantity, timeInForce: 'GTC', price: price.to_s.to_f)
     end
 
     def fetch_balance
@@ -80,11 +80,11 @@ module BinanceClient
     end
 
     def update_margin_type(symbol:, margin_type:) # margin_type "ISOLATED | CROSSED"
-      connection.post('/fapi/v1/marginType', { symbol: symbol, marginType: margin_type, timestamp: timestamp })
+      connection.post('/fapi/v1/marginType', { symbol: symbol, marginType: margin_type.to_s.upcase, timestamp: timestamp })
     end
 
     def position_risk(symbol:)
-      connection.get('/fapi/v2/positionRisk', { symbol: symbol })
+      connection.get('/fapi/v2/positionRisk', { symbol: symbol, timestamp: timestamp })
     end
 
     private
