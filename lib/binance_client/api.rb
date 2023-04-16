@@ -96,7 +96,7 @@ module BinanceClient
       ) do |f|
         f.request :url_encoded
         f.request :binance_signature, secret_key
-        f.response :logger, ::Logger.new(STDOUT), bodies: true, headers: false
+        f.response :logger, ::Logger.new(STDOUT), bodies: false, headers: false
         f.response :json, parser_options: { symbolize_names: true }
       end
     end
