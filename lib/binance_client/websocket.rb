@@ -4,7 +4,7 @@ require 'faye/websocket'
 module BinanceClient
   class WebSocket < Faye::WebSocket::Client
     def initialize(on_open: nil, on_close: nil, on_message: nil, config: Environment.config)
-      super config.ws_url, nil, ping: 180
+      super config.stream_url, nil, ping: 180
 
       @request_id_inc = 0
 

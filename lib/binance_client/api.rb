@@ -87,8 +87,8 @@ module BinanceClient
       connection.get('/fapi/v2/positionRisk', { symbol: symbol, timestamp: timestamp })
     end
 
-    def candlesticks(symbol, interval, limit: 1000)
-      connection.get('/fapi/v1/klines', symbol: symbol, interval: interval, limit: limit)
+    def candlesticks(symbol, interval, limit: 1000, startTime: nil, endTime: nil)
+      connection.get('/fapi/v1/klines', symbol: symbol, limit: limit, interval: interval, startTime: startTime, endTime: endTime)
     end
 
     private
