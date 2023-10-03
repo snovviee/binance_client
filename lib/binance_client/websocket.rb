@@ -25,6 +25,10 @@ module BinanceClient
       subscribe(listen_keys)
     end
 
+    def candleshit
+      subscribe("btcusdt@kline_1m")
+    end
+
     private
 
     def subscribe(streams)

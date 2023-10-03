@@ -7,6 +7,6 @@
   "production": {
     "http_url": "https://fapi.binance.com",
     "ws_url": "wss://fstream.binance.com/ws/",
-    "stream_url": "wss://fstream.binance.com/stream"
+    "stream_url": "wss://fstream.binance.com/stream?streams="
   }
 }

@@ -21,11 +21,11 @@ module BinanceClient
        attr_reader :config, :env
 
        def setup!
-         raise MultipleAssignmentNotAllowed if @config
+         # raise MultipleAssignmentNotAllowed if @config
 
          @env = ENV['BINANCE_ENV']&.downcase&.to_sym
-         raise EnvIsMissing unless self.env
-         raise EnvNotAllowed unless ALLOWED_ENVS.include? self.env
+         # raise EnvIsMissing unless self.env
+         # raise EnvNotAllowed unless ALLOWED_ENVS.include? self.env
 
          @config = OpenStruct.new(env_params)
        end
