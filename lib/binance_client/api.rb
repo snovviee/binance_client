@@ -91,6 +91,22 @@ module BinanceClient
       connection.get('/fapi/v1/klines', symbol: symbol, limit: limit, interval: interval, startTime: startTime, endTime: endTime)
     end
 
+    def cancel_open_orders(symbol:)
+      connection.delete('/fapi/v1/allOpenOrders', { symbol: symbol, timestamp: timestamp})
+    end
+
+    def place_stop_market_order(symbol:, side:, stop_price:)
+      place_order(symbol: symbol, side: side.to_s.upcase, type: 'STOP_MARKET', stopPrice: stop_price, closePosition: true)
+    end
+
+    def place_take_profit(symbol:, side:, quantity:, price:)
+      place_order(symbol: symbol, side: side.to_s.upcase, type: 'TAKE_PROFIT', quantity: quantity, price: price.to_s.to_f, stopPrice: stop_price)
+    end
+
+    def place_take_profit_market(symbol:, side:, stop_price:)
+      place_order(symbol: symbol, side: side.to_s.upcase, type: 'TAKE_PROFIT_MARKET', stopPrice: stop_price, closePosition: true)
+    end
+
     private
 
     def connection
