@@ -99,8 +99,8 @@ module BinanceClient
       place_order(symbol: symbol, side: side.to_s.upcase, type: 'STOP_MARKET', stopPrice: stop_price, closePosition: true)
     end
 
-    def place_take_profit(symbol:, side:, quantity:, price:)
-      place_order(symbol: symbol, side: side.to_s.upcase, type: 'TAKE_PROFIT', quantity: quantity, price: price.to_s.to_f, stopPrice: stop_price)
+    def place_take_profit(symbol:, side:, quantity:, stop_price:)
+      place_order(symbol: symbol, side: side.to_s.upcase, type: 'TAKE_PROFIT', quantity: quantity, stopPrice: stop_price)
     end
 
     def place_take_profit_market(symbol:, side:, stop_price:)
