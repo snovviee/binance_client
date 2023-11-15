@@ -95,8 +95,14 @@ module BinanceClient
       connection.delete('/fapi/v1/allOpenOrders', { symbol: symbol, timestamp: timestamp})
     end
 
-    def place_stop_market_order(symbol:, side:, stop_price:)
-      place_order(symbol: symbol, side: side.to_s.upcase, type: 'STOP_MARKET', stopPrice: stop_price, closePosition: true)
+    def place_stop_market_order(symbol:, side:, stop_price:, goodTillDate: nil)
+      params = {
+        symbol: symbol, side: side.to_s.upcase, type: 'STOP_MARKET', stopPrice: stop_price, closePosition: true
+      }
+
+      params.merge!(goodTillDate: goodTillDate) if goodTillDate
+
+      place_order(params)
     end
 
     def place_take_profit(symbol:, side:, quantity:, stop_price:, price:, reduce_only: false)
