@@ -55,8 +55,13 @@ module BinanceClient
       place_order(symbol: symbol, side: side.to_s.upcase, type: 'MARKET', quantity: quantity)
     end
 
-    def place_limit_order(symbol:, side:, quantity:, price:)
-      place_order(symbol: symbol, side: side.to_s.upcase, type: 'LIMIT', quantity: quantity, timeInForce: 'GTC', price: price.to_s.to_f)
+    def place_limit_order(symbol:, side:, quantity:, price:, goodTillDate: nil)
+      params = {
+        symbol: symbol, side: side.to_s.upcase, type: 'LIMIT', quantity: quantity, timeInForce: 'GTC', price: price.to_s.to_f
+      }
+      params.merge!(goodTillDate: timestamp + 900000, timeInForce: 'GTD') if goodTillDate
+
+      place_order(params)
     end
 
     def fetch_balance
@@ -99,8 +104,7 @@ module BinanceClient
       params = {
         symbol: symbol, side: side.to_s.upcase, type: 'STOP_MARKET', stopPrice: stop_price, closePosition: true
       }
-
-      params.merge!(goodTillDate: goodTillDate) if goodTillDate
+      params.merge!(goodTillDate: timestamp + 900000, timeInForce: 'GTD') if goodTillDate
 
       place_order(params)
     end
