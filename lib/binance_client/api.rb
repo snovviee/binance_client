@@ -47,6 +47,10 @@ module BinanceClient
       connection.get('/fapi/v1/allOrders', { symbol: symbol, timestamp: timestamp })
     end
 
+    def open_orders(symbol:)
+      connection.get('/fapi/v1/openOrders', { symbol: symbol, timestamp: timestamp })
+    end
+
     def place_order(params)
       connection.post('/fapi/v1/order', params.merge(timestamp: timestamp))
     end
