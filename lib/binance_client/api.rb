@@ -68,14 +68,14 @@ module BinanceClient
       place_order(params)
     end
 
-    def place_trailing_stop_market_order(symbol:, side:, activation_price:, callback_rate: 2.0)
+    def place_trailing_stop_market_order(symbol:, side:, quantity:, activation_price:, callback_rate: 2.0)
       params = {
         symbol: symbol,
         side: side.to_s.upcase,
         type: 'TRAILING_STOP_MARKET',
         activationPrice: activation_price,
         callbackRate: callback_rate,
-        closePosition: true
+        quantity: quantity
       }
 
       place_order(params)
