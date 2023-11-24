@@ -64,6 +64,19 @@ module BinanceClient
       place_order(params)
     end
 
+    def place_trailing_stop_market_order(symbol:, side:, activation_price:, callback_rate: 2.0)
+      params = {
+        symbol: symbol,
+        side: side.to_s.upcase,
+        type: 'TRAILING_STOP_MARKET',
+        activationPrice: activation_price,
+        callbackRate: callback_rate,
+        closePosition: true
+      }
+
+      place_order(params)
+    end
+
     def fetch_balance
       connection.get('/fapi/v2/balance', { timestamp: timestamp })
     end
