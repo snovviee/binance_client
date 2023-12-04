@@ -63,7 +63,7 @@ module BinanceClient
       params = {
         symbol: symbol, side: side.to_s.upcase, type: 'LIMIT', quantity: quantity, timeInForce: 'GTC', price: price.to_s.to_f
       }
-      params.merge!(goodTillDate: timestamp + 900000, timeInForce: 'GTD') if goodTillDate
+      params.merge!(goodTillDate: timestamp + 600000, timeInForce: 'GTD') if goodTillDate
 
       place_order(params)
     end
