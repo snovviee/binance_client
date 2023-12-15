@@ -101,6 +101,12 @@ module BinanceClient
       connection.get('/fapi/v1/exchangeInfo')
     end
 
+    def ticker_24h(symbol: nil)
+      params = {}
+      params.merge!(symbol: symbol) if symbol
+      connection.get('/fapi/v1/ticker/24hr', params)
+    end
+
     def update_margin_type(symbol:, margin_type:) # margin_type "ISOLATED | CROSSED"
       connection.post('/fapi/v1/marginType', { symbol: symbol, marginType: margin_type.to_s.upcase, timestamp: timestamp })
     end
