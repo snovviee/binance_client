@@ -101,6 +101,12 @@ module BinanceClient
       connection.get('/fapi/v1/exchangeInfo')
     end
 
+    def user_trades(symbol: ,start_time: nil, end_time: nil)
+      params = { symbol: symbol, timestamp: timestamp }
+      params.merge!(startTime: start_time, endTime: end_time) if start_time && end_time
+      connection.get('/fapi/v1/userTrades', params)
+    end
+
     def ticker_24h(symbol: nil)
       params = {}
       params.merge!(symbol: symbol) if symbol
