@@ -107,6 +107,14 @@ module BinanceClient
       connection.get('/fapi/v1/userTrades', params)
     end
 
+    def trade_download_id(start_time:, end_time:)
+      connection.get('/fapi/v1/trade/asyn', { timestamp: timestamp, startTime: start_time, endTime: end_time })
+    end
+
+    def trade_download_link(download_id:)
+      connection.get('/fapi/v1/trade/asyn/id', { downloadId: download_id, timestamp: timestamp })
+    end
+
     def order_amendment(symbol:, order_id:)
       params = { symbol: symbol, timestamp: timestamp, orderId: order_id }
       connection.get('/fapi/v1/orderAmendment', params)
