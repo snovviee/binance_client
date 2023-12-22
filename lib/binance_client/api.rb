@@ -107,6 +107,11 @@ module BinanceClient
       connection.get('/fapi/v1/userTrades', params)
     end
 
+    def order_amendment(symbol:, order_id:)
+      params = { symbol: symbol, timestamp: timestamp, orderId: order_id }
+      connection.get('/fapi/v1/orderAmendment', params)
+    end
+
     def ticker_24h(symbol: nil)
       params = {}
       params.merge!(symbol: symbol) if symbol
