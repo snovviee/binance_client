@@ -146,7 +146,7 @@ module BinanceClient
       params = {
         symbol: symbol, side: side.to_s.upcase, type: 'STOP_MARKET', stopPrice: stop_price, closePosition: true
       }
-      params.merge!(goodTillDate: timestamp + 2400000, timeInForce: 'GTD') if goodTillDate
+      params.merge!(goodTillDate: timestamp + 1500000, timeInForce: 'GTD') if goodTillDate
 
       place_order(params)
     end
